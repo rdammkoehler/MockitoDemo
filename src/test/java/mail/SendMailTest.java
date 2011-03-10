@@ -16,6 +16,7 @@ public class SendMailTest extends MockitoTestBase {
 	
 	@Test
 	public void shouldSendMessageToAddressWhenAddressAndBodyProvided() {
+		when(verifier.verify(any(Message.class))).thenReturn(true);
 		String to = "testuser@mydomain.net";
 		String body = "this is a test message";
 		sender.deliver(to,body);
@@ -29,5 +30,6 @@ public class SendMailTest extends MockitoTestBase {
 		String to = null;
 		String body = "this is a test message";
 		sender.deliver(to,body);		
+		verify(server,never()).accept(any(Message.class));
 	}
 }
