@@ -23,9 +23,9 @@ public class SendMailTest extends MockitoTestBase {
 		verify(server).accept(any(Message.class));
 	}
 	
-	@Test(expectedExceptions=RuntimeException.class,expectedExceptionsMessageRegExp="Failed")
+	@Test
 	public void shouldReceiveRuntimeExceptionIfMessageIsInvalid() {
-		doThrow(new RuntimeException("Failed")).when(verifier).verify(any(Message.class));
+		when(verifier.verify(any(Message.class))).thenReturn(false);
 		String to = null;
 		String body = "this is a test message";
 		sender.deliver(to,body);		
